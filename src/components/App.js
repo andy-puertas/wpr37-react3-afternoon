@@ -4,6 +4,7 @@ import './App.css';
 
 import Header from './Header/Header';
 import Compose from './Compose/Compose';
+import Post from './Post/Post'
 
 class App extends Component {
   constructor() {
@@ -42,7 +43,7 @@ class App extends Component {
   }
 
   render() {
-    const { posts } = this.state;
+  const { posts } = this.state;
 
     return (
       <div className="App__parent">
@@ -51,7 +52,13 @@ class App extends Component {
         <section className="App__content">
 
           <Compose />
-          
+          {
+          posts.map( post => 
+            (<Post key={ post.id }
+                   text={ post.text }
+                   date={ post.date } />
+            ))
+          }
         </section>
       </div>
     );
