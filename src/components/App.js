@@ -30,15 +30,33 @@ class App extends Component {
 
   }
 
-  updatePost() {
+  updatePost(id, text) {
+    let promise = axios.put(`${this.state.baseUrl}/posts?id=${id}`, { text } )
+    promise.then((res) => {
+      this.setState({
+        posts: res.data
+      })
+    })
   
   }
 
-  deletePost() {
+  deletePost( id ) {
+    let promise = axios.delete(`${this.state.baseUrl}/posts?id=${id}`)
+    promise.then((res) => {
+      this.setState({
+        posts: res.data
+      })
+    })
 
   }
 
-  createPost() {
+  createPost( text ) {
+    let promise = axios.post(`${this.state.baseUrl}/posts`, { text })
+    promise.then((res) => {
+      this.setState({
+        posts: res.data
+      })
+    })
 
   }
 
@@ -51,12 +69,16 @@ class App extends Component {
 
         <section className="App__content">
 
-          <Compose />
+          <Compose createPostFn={ this.createPost } />
           {
           posts.map( post => 
             (<Post key={ post.id }
                    text={ post.text }
-                   date={ post.date } />
+                   date={ post.date }
+                   id={ post.id }
+                   updatePostFn={ this.updatePost }
+                   deletePostFn={ this.deletePost }
+                   />
             ))
           }
         </section>
