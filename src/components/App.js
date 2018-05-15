@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
 import './App.css';
 
 import Header from './Header/Header';
@@ -10,7 +10,8 @@ class App extends Component {
     super();
 
     this.state = {
-      posts: []
+      posts: [],
+      baseUrl: 'https://practiceapi.devmountain.com/api'
     };
 
     this.updatePost = this.updatePost.bind( this );
@@ -19,6 +20,12 @@ class App extends Component {
   }
   
   componentDidMount() {
+   let promise = axios.get(`${this.state.baseUrl}/posts`)
+   promise.then((res) => {
+     this.setState({
+       posts: res.data
+     })
+   })
 
   }
 
